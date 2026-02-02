@@ -1,0 +1,35 @@
+{
+
+    "input_path": "F:/Xinlin_Gao/AA_16gene_mouse_ZHOU/data_extraction/reads_by_round_huygens_decon/", 
+    "output_path": "F:/Xinlin_Gao/AA_16gene_mouse_ZHOU/data_extraction/reads_by_round_huygens_decon/output/spotiflow0.01_minIntens0.1/", 
+    "ref_round": "round1",
+    "additional_round": [],
+    "ref_channel": "DAPI",
+    "fov_id_pattern": "Tile_%d",
+    "starting_fov_id": 44,
+    "number_of_fovs": 20,
+    "rotate_angle": 0,
+    "maximum_projection": false,
+
+    "img_col": 2720,
+    "img_row": 2720,
+    "img_z": 40,
+
+    "grid_type": "Grid: column-by-column",
+    "grid_order": "Down & Right",
+    "grid_size_x": 7, 
+    "grid_size_y": 10, 
+    "fov_overlap": 0.1,
+
+    "channel_order": [{"wavelength": 488, "channel": "ch00", "name": "488"},
+                    {"wavelength": 561, "channel": "ch02", "name": "561"},
+                    {"wavelength": 730, "channel": "ch01", "name": "730"},
+                    {"wavelength": 638, "channel": "ch03", "name": "638"},
+                    {"wavelength": 405, "channel": "ch04", "name": "DAPI"}]
+
+
+
+
+
+    
+}

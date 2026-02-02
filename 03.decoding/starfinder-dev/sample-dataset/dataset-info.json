@@ -1,0 +1,33 @@
+{
+
+    "input_path": "~/sample-dataset/cell-culture-3D/", 
+    "output_path": "~/sample-dataset-output/cell-culture-3D/", 
+    "ref_round": "round1",
+    "additional_round": ["organelle"],
+    "ref_channel": "DAPI",
+    "fov_id_pattern": "Position%03d",
+    "starting_fov_id": 351,
+    "number_of_fovs": 1,
+    "rotate_angle": -90,
+    "maximum_projection": false,
+
+    "img_col": 1496,
+    "img_row": 1496,
+    "img_z": 30,
+
+    "grid_type": "Grid: column-by-column",
+    "grid_order": "Down & Right",
+    "grid_size_x": 7, 
+    "grid_size_y": 10, 
+    "fov_overlap": 0.1,
+
+    "channel_order": [{"wavelength": 488, "channel": "ch00", "name": "DAPI"},
+                    {"wavelength": 594, "channel": "ch01", "name": "ER"},
+                    {"wavelength": 546, "channel": "ch02", "name": "Flamingo"}]
+
+
+
+
+
+    
+}

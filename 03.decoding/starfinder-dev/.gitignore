@@ -1,0 +1,11 @@
+*.asv
+*.tif
+*checkpoint.ipynb
+.DS_Store
+Thumbs.db
+starfinder-dev.code-workspace
+.starfinder-dev.code-workspace
+workflow/.snakemake
+workflow/snakemake-logs
+.snakemake
+
