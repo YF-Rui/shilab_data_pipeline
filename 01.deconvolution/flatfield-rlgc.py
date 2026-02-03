@@ -10,15 +10,18 @@ import cupy as cp
 # import threading
 # import time
 # from datetime import datetime
+#specify which gpu to use
 cp.cuda.Device(1).use()
 
 delete_raw = True
-base_dir = "/media/shilab/ShiLab_SSD1/WT_WellA4_RIBO"
-# Configuration
-psf_dir = r"/media/shilab/ssd2tb/Xinlin_Gao/theoretical_psf/60x_water"
+#chaneg base dir (should be a level up from raw)
+base_dir = "/media/shilab/L/YJ_AE_16gene/plate1_WT"
 input_path = rf"{base_dir}/raw"
 output_path = rf"{base_dir}/ff_decon_16bit"
+#only change if your stacks are not saved from 2d-to-stack script
 pattern = re.compile(r'_ch0(\d+)_(?:current|Tile)_(\d+)_(\d+)\.tif')
+tile_start= 472
+tile_end = 5000
 
 WAVELENGTH_TO_PSF_FOLDER = {
     405: psf_dir + "/psf_405.tif",
@@ -377,5 +380,6 @@ for r in rounds:
 # safe_log(f"Ended: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", "INFO")
 # safe_log(f"Log saved to: {log_path}", "INFO")
 # safe_log("=" * 70, "INFO")
+
 
 # log.close()
