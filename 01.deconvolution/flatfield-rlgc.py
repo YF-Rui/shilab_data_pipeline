@@ -23,6 +23,8 @@ pattern = re.compile(r'_ch0(\d+)_(?:current|Tile)_(\d+)_(\d+)\.tif')
 tile_start= 472
 tile_end = 5000
 
+# Configuration
+psf_dir = r"/media/shilab/ssd2tb/Xinlin_Gao/theoretical_psf/60x_water"
 WAVELENGTH_TO_PSF_FOLDER = {
     405: psf_dir + "/psf_405.tif",
     488: psf_dir + "/psf_488.tif",
@@ -383,3 +385,4 @@ for r in rounds:
 
 
 # log.close()
+
