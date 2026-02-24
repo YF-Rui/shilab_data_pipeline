@@ -1,3 +1,7 @@
+"""
+Convert fiji output coordinate file: configurations.txt to clustermap stiching input foramt: grid.csv
+"""
+
 import re
 import numpy as np
 import pandas as pd
@@ -81,7 +85,8 @@ def generate_grid_csv(cfg_file, out_csv):
 # Run
 # -------------------------
 if __name__ == "__main__":
+    output_root = r"/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_KO/ff_decon_16bit/output/max3d0.03_zcorrected_voxel332"
     generate_grid_csv(
-        cfg_file=r"d:\YJ_AE_1000_full\KO_WellA4_RIBO\ff_decon_16bit\output\max3d_minIntens0.03_ref638_z_correction_voxel332\images\fused\dapi\configurations.txt",
-        out_csv=r"D:\YJ_AE_1000_full\KO_WellA4_RIBO\ff_decon_16bit\output\max3d_minIntens0.03_ref638_z_correction_voxel332\images\fused\grid.csv"
+        cfg_file=rf"{output_root}/images/fused/dapi/configurations.txt",
+        out_csv=rf"{output_root}/images/fused/grid.csv"
     )

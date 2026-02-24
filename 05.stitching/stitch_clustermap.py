@@ -1,6 +1,9 @@
 # stitch ClusterMap result of each fov for 2D mouse tissue section 
 # user will define:
 # config_path
+"""
+python /media/shilab/ssd2tb/Shilab_decoding_pipeline/05.stitching/stitch_clustermap.py /path/to/dataset_info.json/
+"""
 
 import sys, json
 config_path = sys.argv[1]
@@ -24,6 +27,9 @@ from tqdm import tqdm
 from scipy.spatial import distance
 from matplotlib.collections import PatchCollection, LineCollection
 from matplotlib.patches import Rectangle
+
+#Output adata file name
+h5ad_file_name = "YJ_AE_16gene_plate1_KO"
 
 # Functions  
 def closest_node(node, nodes):
@@ -68,7 +74,7 @@ tile_config_combined = tile_config_original.join(tile_config_registered, lsuffix
 tile_config_combined = tile_config_combined.drop('fov_reg', axis=1)
 tile_config_combined.columns = ['fov', 'col', 'row', 'col_registered', 'row_registered']
 tile_config_combined['id'] = tile_config_combined['fov'].str.extract(r'(?P<digit>\d+)').astype(int)
-
+cop
 # Load grid file 
 grid_df = pd.read_csv(os.path.join(image_path, "fused", 'grid.csv'), index_col=0)
 grid_df.columns = ['col_count', 'row_count', 'id', 'grid']
@@ -330,4 +336,4 @@ adata = ad.AnnData(X=np.array(exp_matrix),
 
 from datetime import datetime
 date = datetime.today().strftime('%Y-%m-%d')
-adata.write_h5ad(os.path.join(expr_path, f"{date}-YJ_AE_trial2_WT_STAR_clustermap.h5ad"))
+adata.write_h5ad(os.path.join(expr_path, f"{date}-{h5ad_file_name}.h5ad"))
