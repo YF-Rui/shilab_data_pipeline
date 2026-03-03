@@ -476,21 +476,21 @@ if __name__ == "__main__":
     try:
         if args.mode in ["stitch", "both"]:
             stitch_tiles_gpu(
-                tile_dir=args.tile_dir or r"D:\YJ_AE_1000_full\WT_WellC3_STAR\ff_decon_16bit\output\max3d_minIntens0.03_ref638_z_correction_voxel332\images\fused\DAPI",
-                coord_file=args.coord_file or r"/media/shilab/ShiLab_SSD1/Thick_tissue_data/deep_STARmap_mNB/TileConfiguration.registered.txt",
-                output_dir=args.planes_dir or r"D:\YJ_AE_1000_full\WT_WellC3_STAR\ff_decon_16bit\output\max3d_minIntens0.03_ref638_z_correction_voxel332\images\fused\dapi_planes",
+                tile_dir=args.tile_dir or r"/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_WT/ff_decon_16bit/output/max3d0.03_zcorrected_voxel332/images/fused/dapi/",
+                coord_file=args.coord_file or r"/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_WT/ff_decon_16bit/output/max3d0.03_zcorrected_voxel332/images/fused/configurations.registered.txt",
+                output_dir=args.planes_dir or r"/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_WT/ff_decon_16bit/output/max3d0.03_zcorrected_voxel332/images/fused/dapi_planes",
                 blend_overlap=False,
                 batch_size=args.batch_size,
                 z_chunk_size=args.z_chunk_size
             )
         
-        # if args.mode in ["combine", "both"]:
-        #     combine_z_planes_to_stack(
-        #         planes_dir=args.planes_dir or r"D:\YJ_AE_1000_full\WT_WellC3_STAR\ff_decon_16bit\output\max3d_minIntens0.03_ref638_z_correction_voxel332\images\fused\dapi_planes",
-        #         output_tif=args.output_tif or r"D:\YJ_AE_1000_full\WT_WellC3_STAR\ff_decon_16bit\output\max3d_minIntens0.03_ref638_z_correction_voxel332\images\fused\MAX_DAPI.tif",
-        #         compression=compression,
-        #         z_project=args.z_project
-        #     )
+        if args.mode in ["combine", "both"]:
+            combine_z_planes_to_stack(
+                planes_dir=args.planes_dir or r"/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_WT/ff_decon_16bit/output/max3d0.03_zcorrected_voxel332/images/fused/dapi_planes",
+                output_tif=args.output_tif or r"/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_WT/ff_decon_16bit/output/max3d0.03_zcorrected_voxel332/images/fused/DAPI.tif",
+                compression=compression,
+                z_project=args.z_project
+            )
             
     except cp.cuda.memory.OutOfMemoryError:
         print(f"\n GPU Out of Memory Error")

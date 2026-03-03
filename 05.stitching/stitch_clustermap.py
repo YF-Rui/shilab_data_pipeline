@@ -29,7 +29,7 @@ from matplotlib.collections import PatchCollection, LineCollection
 from matplotlib.patches import Rectangle
 
 #Output adata file name
-h5ad_file_name = "YJ_AE_16gene_plate1_KO"
+h5ad_file_name = "YJ_AE_16gene_plate1_WT"
 
 # Functions  
 def closest_node(node, nodes):
@@ -74,7 +74,7 @@ tile_config_combined = tile_config_original.join(tile_config_registered, lsuffix
 tile_config_combined = tile_config_combined.drop('fov_reg', axis=1)
 tile_config_combined.columns = ['fov', 'col', 'row', 'col_registered', 'row_registered']
 tile_config_combined['id'] = tile_config_combined['fov'].str.extract(r'(?P<digit>\d+)').astype(int)
-cop
+
 # Load grid file 
 grid_df = pd.read_csv(os.path.join(image_path, "fused", 'grid.csv'), index_col=0)
 grid_df.columns = ['col_count', 'row_count', 'id', 'grid']
@@ -153,7 +153,7 @@ for i in tqdm(range(tile_config_final.shape[0])):
         if left_record.empty:
             pass
         else:
-            middle_edge = int((left_record['col_registered'] + img_col - current_col_registered)/2 + 0.5)
+            middle_edge = int((left_record['col_registered'].iloc[0] + img_col - current_col_registered)/2 + 0.5)
 
             if middle_edge >= 0: 
                     current_col_registered = middle_edge + current_col_registered
@@ -169,7 +169,7 @@ for i in tqdm(range(tile_config_final.shape[0])):
         if up_record.empty:
             pass
         else:
-            middle_edge = int((up_record['row_registered'] + img_row - current_row_registered)/2 + 0.5)
+            middle_edge = int((up_record['row_registered'].iloc[0] + img_row - current_row_registered)/2 + 0.5)
 
             if middle_edge >= 0: 
                     current_row_registered = middle_edge + current_row_registered

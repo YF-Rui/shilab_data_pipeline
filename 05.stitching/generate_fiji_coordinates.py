@@ -13,10 +13,11 @@ import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Set path
-coordinates_directory = r"/media/shilab/Expd-NSD/2025-09-10-YJ_AE_16gene/Plate1-C4-inverted-SeqA1-KO/KO-star16-SeqA1-40layers_2025-09-11_13-02-03.660881/0"
-output_root = Path("/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_KO/ff_decon_16bit")
+coordinates_directory = r"/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_KO/ff_decon_16bit/"
+output_root = Path(r"/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_KO/ff_decon_16bit")
 output_dir = output_root / "output/max3d0.03_zcorrected_voxel332/images/fused"
 output_dir.mkdir(parents=True, exist_ok=True)
+dapi_path = output_root / "round1"
 # fov_n = [i for i in range(0,16)]
 
 # ==========================================================
@@ -45,7 +46,7 @@ for idx, row in coord.iterrows():
     output_lines.append(f"{tile_name}; ; {coords_str}")
 
 # Save to file
-output_file = rf"{output_dir}\configurations.txt"
+output_file = rf"{output_dir}/configurations.txt"
 with open(output_file, 'w') as f:
     f.write('\n'.join(output_lines))
 print(f"Saved coordinates to {output_file}")
@@ -79,7 +80,6 @@ def process_file(path, o, flat=False):
 # ==========================================================
 # PROCESS DAPI FILES (16bit to 8bit)
 # ==========================================================
-dapi_path = output_root / "round1"
 files = list(dapi_path.rglob("*ch04*.tif"))
 with ThreadPoolExecutor(max_workers=2) as executor:
     futures = [executor.submit(process_file, f, "dapi") for f in files]
@@ -96,15 +96,15 @@ with ThreadPoolExecutor(max_workers=2) as executor:
 # PROCESS REF_MERGED FILES (could comment out if stitch for single cell only) (16bit to 8bit)
 # ==========================================================
 
-ref_folder = output_root / "output/max3d0.03_zcorrected_voxel332/images/ref_merged"  
-ref_files = list(ref_folder.rglob("*.tif"))
-with ThreadPoolExecutor(max_workers=6) as executor:
-    futures = [executor.submit(process_file, f, "ref_merged", flat=False) for f in ref_files]
-    for future in tqdm.tqdm(as_completed(futures), total=len(futures), desc="Processing ref_merged files"):
-        try:
-            result = future.result()
-            tqdm.tqdm.write(result)
-        except KeyboardInterrupt:
-            tqdm.tqdm.write("Interrupted by user!")
-            executor.shutdown(wait=False)
-            break
+# ref_folder = output_root / "output/max3d0.03_zcorrected_voxel332/images/ref_merged"  
+# ref_files = list(ref_folder.rglob("*.tif"))
+# with ThreadPoolExecutor(max_workers=6) as executor:
+#     futures = [executor.submit(process_file, f, "ref_merged", flat=False) for f in ref_files]
+#     for future in tqdm.tqdm(as_completed(futures), total=len(futures), desc="Processing ref_merged files"):
+#         try:
+#             result = future.result()
+#             tqdm.tqdm.write(result)
+#         except KeyboardInterrupt:
+#             tqdm.tqdm.write("Interrupted by user!")
+#             executor.shutdown(wait=False)
+#             break

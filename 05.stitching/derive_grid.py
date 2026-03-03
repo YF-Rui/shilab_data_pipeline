@@ -85,8 +85,8 @@ def generate_grid_csv(cfg_file, out_csv):
 # Run
 # -------------------------
 if __name__ == "__main__":
-    output_root = r"/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_KO/ff_decon_16bit/output/max3d0.03_zcorrected_voxel332"
+    output_root = r"/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_WT/ff_decon_16bit/output/max3d0.03_zcorrected_voxel332"
     generate_grid_csv(
-        cfg_file=rf"{output_root}/images/fused/dapi/configurations.txt",
+        cfg_file=rf"{output_root}/images/fused/configurations.txt",
         out_csv=rf"{output_root}/images/fused/grid.csv"
     )
