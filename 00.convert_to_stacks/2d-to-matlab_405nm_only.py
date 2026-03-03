@@ -12,13 +12,13 @@ import tqdm
 ####################################################################################################
 
 # Input and output directory roots
-dir_list = [r"/media/shilab/Elements/2025-11-19/2025-11-19/WellC2-Inverted-STAR-WT-SeqZ4_2025-11-18_11-28-24.252008/0"]
+dir_list = [r"/media/shilab/Expd-NSD/2025-09-10-YJ_AE_16gene/Plate1-C4-inverted-SeqA1-KO/KO-star16-SeqA1-40layers_2025-09-11_13-02-03.660881/0"]
 #replace with tiles needed
 # fov_n = [139,140,141,142,159,160,161,162,178,179,180,181,195,196,197,198]
-fov_n = range(0,280) ##the largest tile num+1 (ex:235+1)
-round_num = 4 #specify round number
-condition = "WellC2_inverted_STAR_WT" #specify details, this will be saved as prefix of filenames
-output_dir = r"/media/shilab/ssd2tb/YJ_AE_1000_trial1revisit/WT_C2_STAR/"
+fov_n = range(0,236) ##the largest tile num+1 (ex:235+1)
+round_num = 1 #specify round number
+condition = " " #specify details, this will be saved as prefix of filenames
+output_dir = r"/media/shilab/e1d4624c-bf72-4136-9366-40e20138e615/Yanfang/YJ_AE_16gene/plate1_KO/ff_decon_16bit/"
 
 
 channel_map = {
@@ -44,10 +44,18 @@ for input_root in dir_list:
             fov = int(match.group(1))
             z = int(match.group(2))
             wl = match.group(3)
+
+            #only keep 405 channel files
+            if wl != '405':
+                 continue
+
             file_index[(fov, wl)].append((z, filename))
 
 
     for ch_wavelength, ch_label in channel_map.items():
+        ch_wavelength = '405'
+        ch_label = channel_map[ch_wavelength]
+
         for fov in tqdm.tqdm(fov_n):
             # if t >= 820:
                 zfiles = sorted(file_index.get((fov, ch_wavelength), []), key=lambda x: x[0])
