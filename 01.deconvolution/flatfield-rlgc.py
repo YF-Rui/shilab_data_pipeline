@@ -15,16 +15,31 @@ cp.cuda.Device(1).use()
 
 delete_raw = True
 #chaneg base dir (should be a level up from raw)
-base_dir = "/media/shilab/L/YJ_AE_16gene/plate1_WT"
+base_dir = "/media/shilab/ssd2tb/YJ_AE_1000_trial1revisit/WT_C2_STAR/"
+
+##Don't change
 input_path = rf"{base_dir}/raw"
 output_path = rf"{base_dir}/ff_decon_16bit"
+psf_path = r"/media/shilab/ssd2tb/Yanfang/code_Yanfang/01.deconvolution/theoretical_psf"
+
 #only change if your stacks are not saved from 2d-to-stack script
 pattern = re.compile(r'_ch0(\d+)_(?:current|Tile)_(\d+)_(\d+)\.tif')
-tile_start= 472
-tile_end = 5000
+
+#set tile number to split to 2 gpu
+tile_start= 551
+tile_end = 1200
+
+#Select iteration number of deconv run
+iter_n = 30
+
+#psf parameter, check to make sure match the imaging acquisition parameter
+dz = "0.5" #choose from 0.5, 0.75, 0.1
+xy = "60x" #choose from 25x, 40x, 60x
+medium = "water"#choose from water, oil
 
 # Configuration
-psf_dir = r"/media/shilab/ssd2tb/Xinlin_Gao/theoretical_psf/60x_water"
+image_param = f"{xy}_{medium}_{dz}" #ex: 60x_water_0.5
+psf_dir = rf"{psf_path}/{image_param}"
 WAVELENGTH_TO_PSF_FOLDER = {
     405: psf_dir + "/psf_405.tif",
     488: psf_dir + "/psf_488.tif",
@@ -35,7 +50,7 @@ WAVELENGTH_TO_PSF_FOLDER = {
 
 log = open(f"{base_dir}/raw/deconvolution_log.txt", "a", buffering=1)
 t=0
-# compute_flatfields_from_folder(Path(input_path))
+compute_flatfields_from_folder(Path(input_path))
 log.write("loading computed flatfield masks\n")
 profiles = load_profiles(Path(input_path+"/flatfields"))
 rounds = [f for f in os.listdir(input_path) if os.path.isdir(os.path.join(input_path, f)) and "round" in f.lower()]
@@ -45,7 +60,7 @@ for r in rounds:
 
     for filename in tqdm.tqdm(filenames):
         log.write(f"\nProcessing {filename}\n")
-        if t >= 631:
+        if t >= tile_start and t < tile_end:
             image_path = os.path.join(input_path,r,filename)
             round_output = os.path.join(output_path,r)
 
@@ -55,10 +70,10 @@ for r in rounds:
                             channel = image_path, 
                             filename = filename,
                             psf_json = WAVELENGTH_TO_PSF_FOLDER, 
-                            exp=False, 
-                            output_dir=round_output,
-                            num_iterations=30, 
-                            snr_results=None)
+                            exp = False, 
+                            output_dir = round_output,
+                            num_iterations = iter_n, 
+                            snr_results = None)
             tqdm.tqdm.write(messages[0])
             log.write(messages[0])
             tqdm.tqdm.write(messages[1])
@@ -383,6 +398,4 @@ for r in rounds:
 # safe_log(f"Log saved to: {log_path}", "INFO")
 # safe_log("=" * 70, "INFO")
 
-
 # log.close()
-
