@@ -2,7 +2,16 @@
 # user will define:
 # config_path
 """
-python /media/shilab/ssd2tb/Shilab_decoding_pipeline/05.stitching/stitch_clustermap.py /path/to/dataset_info.json/
+Input:
+1, Put all the following 3 files udner /path/images/fused/
+    1)configuration.txt
+    2)configurations.registered.txt
+    3)grid.csv 
+2, Put the batch .json file under assgined folder (Exampe:"YJ_AE_16_WT_dataset-info_001.json"). Modify the input and output path and the tile numbers as needed
+3, Be sure the output from clustermap were placed in folder "/expr/clustermap"
+
+Command to run:
+python /media/shilab/ssd2tb/Yanfang/code_Yanfang/05.stitching/stitch_clustermap.py /path/to/dataset_info.json
 """
 
 import sys, json
@@ -29,7 +38,7 @@ from matplotlib.collections import PatchCollection, LineCollection
 from matplotlib.patches import Rectangle
 
 #Output adata file name
-h5ad_file_name = "YJ_AE_16gene_plate1_WT"
+h5ad_file_name = "YJ_AE_16gene_plate1_KO"
 
 # Functions  
 def closest_node(node, nodes):
